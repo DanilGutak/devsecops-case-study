@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: click-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DanilGutak/devsecops-case-study.git
+    targetRevision: dev
+    path: manifests/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: click-test
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DanilGutak/devsecops-case-study.git
+    targetRevision: test
+    path: manifests/overlays/test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: click-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/DanilGutak/devsecops-case-study.git
+    targetRevision: prod
+    path: manifests/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
