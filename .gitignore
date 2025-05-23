@@ -2,3 +2,4 @@
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.*
+scripts/cluster-ingress.sh

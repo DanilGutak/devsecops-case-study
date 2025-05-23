@@ -3,12 +3,12 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: case-study
 nodes:
   - role: control-plane
-    kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          taints:
-            - key: "node-role.kubernetes.io/control-plane"
-              effect: "NoSchedule"
+    extraPortMappings:
+        - containerPort: 443
+          hostPort: 443
+          protocol: TCP
+        - containerPort: 80
+          hostPort: 80
+          protocol: TCP
   - role: worker
   - role: worker

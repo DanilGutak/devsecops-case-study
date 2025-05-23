@@ -19,4 +19,9 @@ echo "Applying ArgoCD config..."
 kubectl apply -f ../argocd/applications.yaml
 
 echo "Apply rbac config..."
-kubectl apply -f ../argocd/argo-cmkubectl apply -f argocd/argocd-cm.yaml
+kubectl apply -f ../argocd/rbac.yaml
+
+echo "Apply ingress config..."
+kubectl apply -f ../argocd/ingress.yaml
+
+echo "ArgoCD is ready."
