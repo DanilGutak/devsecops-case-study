@@ -4,8 +4,12 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
+  tls:
+    - hosts:
+        - argocd.local
+      secretName: argocd-tls
   rules:
     - host: argocd.local
       http:

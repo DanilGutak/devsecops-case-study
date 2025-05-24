@@ -19,7 +19,7 @@ echo "Applying ArgoCD config..."
 kubectl apply -f ../argocd/applications.yaml
 
 echo "Apply rbac config..."
-kubectl apply -f ../argocd/rbac.yaml
+kubectl apply -f ../argocd/argo-cm.yaml
 
 echo "Apply ingress config..."
 kubectl apply -f ../argocd/ingress.yaml
