@@ -62,3 +62,10 @@ for correct redir and local functioning add this to your /etc/hosts
 
 to push application to dockerhub you can use image-publish-backend.sh and image-publish-frontend.sh
 
+
+Images were built from hardened base images:
+- Backend: node:18-alpine
+- Frontend: node:18-alpine
+- Postgres: postgres:15
+
+Each image was scanned using `trivy` and found free of critical CVEs as of 2025-05-25.
