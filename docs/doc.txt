@@ -68,4 +68,21 @@ Images were built from hardened base images:
 - Frontend: node:18-alpine
 - Postgres: postgres:15
 
-Each image was scanned using `trivy` and found free of critical CVEs as of 2025-05-25.
+Used trivy for analysing vulnerabilities
+
+
+All workloads follow Kubernetes Pod Security Standards:
+
+Containers run as non-root (runAsNonRoot)
+
+Default seccomp profiles enforced
+
+Filesystem is read-only where possible
+
+ArgoCD and PostgreSQL security contexts are applied
+
+No :latest image tags used
+
+Resource limits and requests defined
+
+All secrets are sealed and managed per environment
