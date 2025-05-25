@@ -3,8 +3,12 @@ kind: Ingress
 metadata:
   name: frontend-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
+  tls:
+    - hosts:
+        - click.dev.local
+      secretName: click-tls
   rules:
   - host: click.dev.local
     http:
@@ -15,5 +19,5 @@ spec:
           service:
             name: frontend
             port:
-              number: 443
+              number: 80
 
