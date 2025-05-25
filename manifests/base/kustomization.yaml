@@ -4,3 +4,4 @@ resources:
   - backend-deployment.yaml
   - backend-service.yaml
   - postgres-statefulset.yaml
+  - network-policy.yaml
