@@ -2,3 +2,5 @@
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.*
+node_modules
+package-lock.json
