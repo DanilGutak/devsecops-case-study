@@ -39,13 +39,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
-          securityContext:
-            runAsUser: 999                   
-            runAsGroup: 999
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: ["ALL"]
           resources:
             limits:
               cpu: "500m"
