@@ -38,10 +38,13 @@ spec:
             - name: data
               mountPath: /var/lib/postgresql/data
           securityContext:
+            runAsUser: 999                   
+            runAsGroup: 999
             runAsNonRoot: true
-            runAsUser: 1000
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+
           resources:
             limits:
               cpu: "500m"
