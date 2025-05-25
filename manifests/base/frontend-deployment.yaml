@@ -26,8 +26,12 @@ spec:
         volumeMounts:
           - name: cache
             mountPath: /var/cache/nginx
+          - name: run
+            mountPath: /run
       volumes:
         - name: cache
+          emptyDir: {}
+        - name: run
           emptyDir: {}
 
 
