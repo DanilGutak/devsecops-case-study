@@ -57,3 +57,8 @@ for correct redir and local functioning add this to your /etc/hosts
 127.0.0.1       click.prod.local
 
 
+
+
+
+to push application to dockerhub you can use image-publish-backend.sh and image-publish-frontend.sh
+
