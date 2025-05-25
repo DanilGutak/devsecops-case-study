@@ -2,6 +2,7 @@ resources:
   - ../base
   - frontend-ingress.yaml
   - sealed-postgres-dev.yaml
+  - rbac
 
 patches:
   - path: patch-frontend.yaml
