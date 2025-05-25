@@ -23,4 +23,11 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ["ALL"]
+        volumeMounts:
+          - name: cache
+            mountPath: /var/cache/nginx
+      volumes:
+        - name: cache
+          emptyDir: {}
+
 
