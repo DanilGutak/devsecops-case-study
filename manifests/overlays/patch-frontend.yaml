@@ -9,11 +9,11 @@ spec:
       containers:
         - name: frontend
           image: danilgutak/click-frontend:latest
-  resources:
-  limits:
-    cpu: "500m"
-    memory: "256Mi"
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
+      resources:
+      limits:
+        cpu: "500m"
+        memory: "256Mi"
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
 
