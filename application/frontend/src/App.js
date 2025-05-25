@@ -4,13 +4,13 @@ function App() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    fetch('http://backend:80/count')
+    fetch('/api/count')
       .then(res => res.json())
       .then(data => setCount(data.count));
   }, []);
 
   const handleClick = () => {
-    fetch('http://backend:80/click', { method: 'POST' })
+    fetch('/api/click', { method: 'POST' })
       .then(res => res.json())
       .then(data => setCount(data.count));
   };
