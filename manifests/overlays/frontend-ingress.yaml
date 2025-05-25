@@ -8,7 +8,7 @@ spec:
   tls:
     - hosts:
         - click.dev.local
-      secretName: click-tls
+      secretName: click-tls-dev
   rules:
   - host: click.dev.local
     http:
