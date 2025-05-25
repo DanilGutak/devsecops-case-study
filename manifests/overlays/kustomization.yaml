@@ -2,4 +2,11 @@ resources:
   - ../base
 
 patches:
-  - patch-frontend.yaml
+  - path: patch-frontend.yaml
+    target:
+      kind: Deployment
+      name: frontend
+  - path: patch-backend.yaml
+    target:
+      kind: Deployment
+      name: backend
