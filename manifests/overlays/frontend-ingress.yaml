@@ -10,6 +10,7 @@ spec:
         - click.dev.local
       secretName: click-dev-tls
   rules:
+  
   - host: click.dev.local
     http:
       paths:
@@ -18,6 +19,13 @@ spec:
         backend:
           service:
             name: frontend
+            port:
+              number: 80
+      - path: /api/
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
             port:
               number: 80
 
