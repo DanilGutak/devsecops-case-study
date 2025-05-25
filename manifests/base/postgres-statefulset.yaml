@@ -11,16 +11,6 @@ spec:
   selector:
     app: postgres
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-secret
-type: Opaque
-stringData:
-  POSTGRES_USER: clickuser
-  POSTGRES_PASSWORD: clickpass
-  POSTGRES_DB: clickdb
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

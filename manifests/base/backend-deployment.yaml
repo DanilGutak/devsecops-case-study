@@ -16,4 +16,8 @@ spec:
       - name: backend
         image: danilgutak/click-backend:latest
         ports:
-        - containerPort: 3001
+          - containerPort: 3001
+        envFrom:
+          - secretRef:
+              name: postgres-secret
+

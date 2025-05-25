@@ -1,6 +1,7 @@
 resources:
   - ../base
   - frontend-ingress.yaml
+  - sealed-postgres-secret.yaml
 
 patches:
   - path: patch-frontend.yaml
