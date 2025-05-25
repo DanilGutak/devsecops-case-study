@@ -7,11 +7,11 @@ app.use(cors());
 
 let clickCount = 0;
 
-app.get('/count', (req, res) => {
+app.get('/api/count', (req, res) => {
   res.json({ count: clickCount });
 });
 
-app.post('/click', (req, res) => {
+app.post('/api/click', (req, res) => {
   clickCount++;
   res.json({ count: clickCount });
 });
