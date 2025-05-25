@@ -14,31 +14,28 @@ const pool = new Pool({
   port: 5432
 });
 
-// initialize DB: create table and row if missing
 (async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS clicks (
-      id INTEGER PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       count INTEGER NOT NULL
     );
   `);
-
-  const res = await pool.query(`SELECT * FROM clicks WHERE id = 1`);
-  if (res.rows.length === 0) {
-    await pool.query(`INSERT INTO clicks (id, count) VALUES (1, 0)`);
-    console.log("Initialized click counter at 0");
+  const result = await pool.query(`SELECT count(*) FROM clicks`);
+  if (result.rows.length === 0) {
+    await pool.query(`INSERT INTO clicks (count) VALUES (0)`);
   }
 })();
 
 app.get('/api/count', async (req, res) => {
   const result = await pool.query(`SELECT count FROM clicks WHERE id = 1`);
-  res.json({ count: result.rows[0]?.count ?? 0 });
+  res.json({ count: result.rows[0].count });
 });
 
 app.post('/api/click', async (req, res) => {
   await pool.query(`UPDATE clicks SET count = count + 1 WHERE id = 1`);
   const result = await pool.query(`SELECT count FROM clicks WHERE id = 1`);
-  res.json({ count: result.rows[0]?.count ?? 0 });
+  res.json({ count: result.rows[0].count });
 });
 
 app.listen(port, () => {
