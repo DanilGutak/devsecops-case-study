@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: danilgutak/click-backend:latest
+          image: danilgutak/click-backend:latests
           resources:
             limits:
               cpu: "500m"
