@@ -37,6 +37,18 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
   volumeClaimTemplates:
     - metadata:
         name: data

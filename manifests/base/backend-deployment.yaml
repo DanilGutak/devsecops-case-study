@@ -20,4 +20,9 @@ spec:
         envFrom:
           - secretRef:
               name: postgres-secret
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
 
