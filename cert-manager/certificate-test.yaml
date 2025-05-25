@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: click-test-cert
+  namespace: test
+spec:
+  secretName: click-test-tls
+  dnsNames:
+    - click.test.local
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer

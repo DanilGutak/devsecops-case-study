@@ -4,9 +4,9 @@ metadata:
   name: click-dev-cert
   namespace: dev
 spec:
-  secretName: click-dev-tls          
+  secretName: click-dev-tls
   dnsNames:
     - click.dev.local
   issuerRef:
-    name: selfsigned-issuer       
+    name: selfsigned-issuer
     kind: ClusterIssuer

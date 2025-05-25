@@ -11,7 +11,13 @@ kubectl rollout status deployment/cert-manager-webhook -n cert-manager
 
 echo "cert-manager is installed."
 
+
+echo "Applying cert-manager configurations..."
 kubectl apply -f ../cert-manager/certificate-argocd.yaml
+kubectl apply -f ../cert-manager/certificate-dev.yaml
+kubectl apply -f ../cert-manager/certificate-prod.yaml
+kubectl apply -f ../cert-manager/certificate-test.yaml
 kubectl apply -f ../cert-manager/issuer-selfsigned.yaml
+
 
 

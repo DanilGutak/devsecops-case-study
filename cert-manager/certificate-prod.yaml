@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: click-prod-cert
+  namespace: prod
+spec:
+  secretName: click-prod-tls
+  dnsNames:
+    - click.prod.local
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
