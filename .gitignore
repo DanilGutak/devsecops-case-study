@@ -5,3 +5,5 @@
 scripts/cluster-ingress.sh
 node_modules
 application/backend/package-lock.json
+sealed-*
+scripts/cert.pem
