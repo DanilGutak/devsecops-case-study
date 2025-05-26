@@ -109,17 +109,45 @@ The Ingress for the application exposes the port 443 as the external access. Fro
 
 ## 5. Security Design
 ### 5.1 Kubernetes RBAC (dev, test, prod)
-TODO: add table
+
+A minimal RBAC setup was implemented: one admin role per environment, with access restricted to that namespace.
+
+| Namespace | Role       | Permissions                  | Subjects          |
+|-----------|------------|------------------------------|-------------------|
+| dev       | dev-user  | Full access in dev namespace | DevOps, Dev team  |
+| test      | test-user | Full access in test namespace| QA, DevOps        |
+| prod      | prod-user | Full access in prod namespace| SRE, DevOps       |
+
+Each namespace is isolated, and users have full control only within their respective environment.
+
+
 ### 5.2 ArgoCD RBAC & Policy Mapping
-TODO: add table
+
+Default ArgoCD RBAC roles were used.
+
+| Role      | Permissions                        | Assigned To    |
+|-----------|------------------------------------|----------------|
+| admin     | Full access to all ArgoCD features | DevOps         |
+| read-only | Can only view applications         | Developers     |
+
+Admins can manage and sync applications, while developers have read-only access to monitor deployments.
+
+
 ### 5.3 Sealed Secrets Implementation
 The secret there sealed using bitnami secret controller offering advance solution to secret handling compared to default solution. Secrets are sealed using the controller so that they cannot be decrypted without it. This allows to push sealed secrets to the cluster without risking an exposure.
 ### 5.4 Network Policies
 The Deny-all default config were introduce to reduce potential threats. 
 ### 5.5 Pod & Container Hardening
 
+Containers run as non-root users wherever possible.
+- Pod Security Standards (restricted) are enforced.
+- Images are built from minimal, official, and regularly updated base images.
+- Read-only root filesystem is set where feasible.
+- Unnecessary capabilities are dropped.
+- SecurityContext is configured to disallow privilege escalation.
 
 ### 5.6 TLS and Encrypted Communication
+TLS is enforced for all external ingress traffic (port 443), ensuring encrypted communication between clients and the application. Internal communication between services can also be encrypted if supported. Certificates are managed using cert-manager. Sensitive data in transit (e.g., database connections) is protected via SSL/TLS.
 
 
 
@@ -128,7 +156,7 @@ The Deny-all default config were introduce to reduce potential threats.
 To start up the cluster, use:
 
     make all
-as well as commands from sections 6.2 and 6.3 to create secrets and argocd. Once argocd is up, and secrets are in place you can synchronise the app and it should be running.
+as well as commands from sections 6.2 and 6.3, 6.4to create secrets and argocd. Once argocd is up, and secrets are in place you can synchronise the app and it should be running.
 
 To destroy cluster, you can run:
 
@@ -152,86 +180,16 @@ Move it to the branch for your enviroment in overlay folder(change dev in names 
 To get admin password you can run this command on cluster:
 
     kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode
+### 6.4 Local DNS
+For correct redir and local functioning add this to your /etc/hosts:
 
+    127.0.0.1       argocd.local
+    127.0.0.1       click.dev.local
+    127.0.0.1       click.test.local
+    127.0.0.1       click.prod.local
 
 ## 7. Conclusion
 ### 7.1 Achievements
 ### 7.2 Potential Improvements
 
 ## 8. Used Resources
-
-We create cluster with 
-
-terraform  init
-terraform apply -auto-approve
-
-then create namespaces for cluster
-kubectl create namespace dev
-kubectl create namespace test
-kubectl create namespace prod
-
-or using cluster-up.sh script
-
-
-
-
-
-we delete it with 
-terraform  destroy -auto-approve
-
-or using cluster-down.sh script
-
-in terraform with have logic for cleaning cluster
-
-
-
-
-
-to get password use:
-kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode
-and save it into password manager keepass for example
-
-
-to rotate password:
-kubectl -n argocd delete secret argocd-initial-admin-secret
-argocd account update-password
-
-
-
-for correct redir and local functioning add this to your /etc/hosts
-
-127.0.0.1       argocd.local
-127.0.0.1       click.dev.local
-127.0.0.1       click.test.local
-127.0.0.1       click.prod.local
-
-
-
-
-
-to push application to dockerhub you can use image-publish-backend.sh and image-publish-frontend.sh
-
-
-Images were built from hardened base images:
-- Backend: node:18-alpine
-- Frontend: node:18-alpine
-- Postgres: postgres:15
-
-Used trivy for analysing vulnerabilities
-
-
-All workloads follow Kubernetes Pod Security Standards:
-
-Containers run as non-root (runAsNonRoot)
-
-Default seccomp profiles enforced
-
-Filesystem is read-only where possible
-
-ArgoCD and PostgreSQL security contexts are applied
-
-No :latest image tags used
-
-Resource limits and requests defined
-
-All secrets are sealed and managed per environment

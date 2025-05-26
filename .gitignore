@@ -8,3 +8,6 @@ application/backend/package-lock.json
 sealed-*
 scripts/cert.pem
 scripts/trivy-detailed.txt
+scripts/postgres-secret-dev.yaml
+scripts/postgres-secret-test.yaml
+scripts/postgres-secret-prod.yaml

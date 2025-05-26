@@ -1,12 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: click-dev-cert
-  namespace: dev
+  name: argocd-cert
+  namespace: argocd
 spec:
-  secretName: click-dev-tls          
+  secretName: argocd-tls
   dnsNames:
-    - click.dev.local
+    - argocd.local
   issuerRef:
-    name: selfsigned-issuer       
+    name: selfsigned-issuer
     kind: ClusterIssuer
+  commonName: argocd.local
