@@ -5,6 +5,7 @@ resources:
   - rbac/prod-role.yaml
   - rbac/prod-role-binding.yaml
   - rbac/prod-service-account.yaml
+  - network-policy.yaml
 
 patches:
   - path: patch-frontend.yaml
