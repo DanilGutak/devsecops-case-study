@@ -90,7 +90,7 @@ As a suggestion and practice to be followed the following promotion strategy for
 ### 3.5 Argo CD Chart
 The following screenshot represent the structure of the application as seen on argoCD UI:
 
-![alt text](ArgoCD.png)
+![alt text](ArgoCD.png) 
 
 ## 4. Application Architecture
 ### 4.1 Demo App Overview (Click Counter)
@@ -190,7 +190,31 @@ For correct redir and local functioning add this to your /etc/hosts:
     127.0.0.1       click.prod.local
 
 ## 7. Conclusion
+
 ### 7.1 Achievements
+- Automated secure multi-node Kubernetes setup with KIND and Terraform.
+- GitOps deployment workflow using ArgoCD and Kustomize.
+- Isolated dev, test, prod namespaces with RBAC and NetworkPolicies.
+- Deployed a full-stack click counter app with encrypted secrets and TLS.
+
 ### 7.2 Potential Improvements
 
+- **Integrate CI/CD**: Use [GitHub Actions](https://docs.github.com/en/actions) for auto-building and deployment.
+- **Add image scanning**: Integrate [Trivy](https://aquasecurity.github.io/trivy/) for container vulnerability scans in CI.
+
+- **Monitor cluster health**: Set up [Prometheus](https://prometheus.io/docs/introduction/overview/) & [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started-prometheus/).
+- **Improve logging**: Add [ELK Stack](https://www.elastic.co/guide/en/elastic-stack/current/index.html) for app logs.
+
 ## 8. Used Resources
+
+- [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [KIND - Kubernetes IN Docker](https://kind.sigs.k8s.io/)
+- [Terraform Docs](https://developer.hashicorp.com/terraform/docs)
+- [ArgoCD Docs](https://argo-cd.readthedocs.io/en/stable/)
+- [Kustomize Docs](https://kubectl.docs.kubernetes.io/references/kustomize/)
+- [Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets)
+- [Cert-Manager Docs](https://cert-manager.io/docs/)
+- [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/)
+- [ReactJS Docs](https://reactjs.org/)
+- [ExpressJS Docs](https://expressjs.com/)
+- [PostgreSQL Docs](https://www.postgresql.org/docs/)
