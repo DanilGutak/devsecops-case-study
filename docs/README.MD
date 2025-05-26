@@ -42,6 +42,13 @@ Possible use to manually run Terraform:
 As for better availability multi-node structure is required so 1 control and 2 worker nodes were created inside the cluster.
 ### 2.3 Namespace Structure: dev, test, prod
 To simulate real enviroments 3 namespaces were created for 3 intended enviroments: dev, test and prod
+Differences:
+| Namespace | Purpose         | Replicas (App Pods) | Resource Limits (CPU/Memory) |
+|-----------|-----------------|---------------------|------------------------------|
+| dev       | Development     | 1                   | Low      |
+| test      | QA/Testing      | 3                   | High  |
+| prod      | Production      | 3                   | High   |
+
 ### 2.4 Ingress Controller Setup (NGINX)
 The Ingress Controller was installed for ArgoCD exposure as well as for main application ingress management. 
 ### 2.5 TLS Certificates with cert-manager
