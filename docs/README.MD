@@ -7,7 +7,6 @@ This repository corresponds to the work done during preparation for the final st
   To design and deploy a secure, automated Kubernetes development environment using KIND and GitOps, featuring separate dev, test, and prod namespaces. The goal is to implement a click counter demo app and enforce security best practices—such as RBAC, secret encryption, and vulnerability scanning—while managing everything declaratively via Git.
 
 ### 1.2 Key Features Implemented
-  Comprehensive list of implemented features:
   - Automated cluster setup with Terraform and KIND
 
   - Three namespaces: dev, test, prod
@@ -60,34 +59,35 @@ The repository has 4 branches:
 ### 3.2 Kustomize: Base and Overlays
 Kustomize was used to patch the application manifests .
 The actual structure of the repository corresponds to the base being the common manifests across different enviroments and overlay being custom configuration based on the enviroment its running it:
-    ├── manifests
-    │   ├── base
-    │   │   ├── backend-deployment.yaml
-    │   │   ├── backend-service.yaml
-    │   │   ├── frontend-deployment.yaml
-    │   │   ├── frontend-service.yaml
-    │   │   ├── kustomization.yaml
-    │   │   ├── network-policy.yaml
-    │   │   └── postgres-statefulset.yaml
-    │   └── overlays
-    │       ├── frontend-ingress.yaml
-    │       ├── kustomization.yaml
-    │       ├── patch-backend.yaml
-    │       ├── patch-frontend.yaml
-    │       ├── rbac
-    │       │   ├── dev-role-binding.yaml
-    │       │   ├── dev-role.yaml
-    │       │   └── dev-service-account.yaml
-    │       └── sealed-postgres-dev.yaml
+
+        ├── manifests
+        │   ├── base
+        │   │   ├── backend-deployment.yaml
+        │   │   ├── backend-service.yaml
+        │   │   ├── frontend-deployment.yaml
+        │   │   ├── frontend-service.yaml
+        │   │   ├── kustomization.yaml
+        │   │   ├── network-policy.yaml
+        │   │   └── postgres-statefulset.yaml
+        │   └── overlays
+        │       ├── frontend-ingress.yaml
+        │       ├── kustomization.yaml
+        │       ├── patch-backend.yaml
+        │       ├── patch-frontend.yaml
+        │       ├── rbac
+        │       │   ├── dev-role-binding.yaml
+        │       │   ├── dev-role.yaml
+        │       │   └── dev-service-account.yaml
+        │       └── sealed-postgres-dev.yaml
 
         
 ### 3.3 ArgoCD Configuration & Applications
-ArgoCD is listening for 3 branches in the repository and deploys any changes occuring to corresponding env.
+ArgoCD tracks three branches in the repository and deploys changes to the corresponding environment.
 
 ### 3.4 Promotion Strategy
 As a suggestion and practice to be followed the following promotion strategy for the new feature implementations should follow through  (dev → test → prod) pipeline conducting QA and checks before promoting changes to new enviroment.
 ![alt text](Promotion.png)
-### 3.5 Argo CD Chart
+### 3.5 ArgoCD Chart
 The following screenshot represent the structure of the application as seen on argoCD UI:
 
 ![alt text](ArgoCD.png) 
@@ -109,7 +109,8 @@ The backend is a Node.js Express server responsible for handling API requests fr
 As a db solution Postgres was chosen implemented as StatefulSet with attached PVC to keep the data persistent. Sealed Secrets were used for login credentials.
 ### 4.5 Ingress and Service Configuration
 The Ingress for the application exposes the port 443 as the external access. Frontend and backend communicate through ingress while backend and postgres are communicating through internal communication.
-
+### 4.6 Dockehub Images
+Images were created with Docker and published to Dockerhub repository. To publish new version scripts/image-publish-*.sh could be used.
 ## 5. Security Design
 ### 5.1 Kubernetes RBAC (dev, test, prod)
 
@@ -139,7 +140,7 @@ Admins can manage and sync applications, while developers have read-only access 
 ### 5.3 Sealed Secrets Implementation
 The secret there sealed using bitnami secret controller offering advance solution to secret handling compared to default solution. Secrets are sealed using the controller so that they cannot be decrypted without it. This allows to push sealed secrets to the cluster without risking an exposure.
 ### 5.4 Network Policies
-The Deny-all default config were introduce to reduce potential threats. 
+The Deny-all default config were introduce to reduce potential threats. Fine-grained networks policies were introduced as well.  
 ### 5.5 Pod & Container Hardening
 
 Containers run as non-root users wherever possible.
@@ -220,3 +221,5 @@ For correct redir and local functioning add this to your /etc/hosts:
 - [ReactJS Docs](https://reactjs.org/)
 - [ExpressJS Docs](https://expressjs.com/)
 - [PostgreSQL Docs](https://www.postgresql.org/docs/)
+- [DockerHub Repository Backend](https://hub.docker.com/repository/docker/danilgutak/click-backend/general)
+- [DockerHub Repository Frontend](https://hub.docker.com/repository/docker/danilgutak/click-frontend/general)
