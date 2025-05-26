@@ -86,19 +86,21 @@ ArgoCD is listening for 3 branches in the repository and deploys any changes occ
 
 ### 3.4 Promotion Strategy
 As a suggestion and practice to be followed the following promotion strategy for the new feature implementations should follow through  (dev → test → prod) pipeline conducting QA and checks before promoting changes to new enviroment.
+![alt text](Promotion.png)
 ### 3.5 Argo CD Chart
 The following screenshot represent the structure of the application as seen on argoCD UI:
-TODO: screenshot of the app
 
-
+![alt text](ArgoCD.png)
 
 ## 4. Application Architecture
 ### 4.1 Demo App Overview (Click Counter)
-TODO: screenshot from the app
+The demo application is a classic three-tier web app designed to demonstrate GitOps workflows, secure deployment, and infrastructure automation. Users interact with a web interface that displays a button; each click is counted and persisted. The architecture separates concerns into frontend, backend, and database services, deployed as independent pods within Kubernetes. All communication is secured, and deployment is fully declarative.
+
 TODO: Schema of logic
 ### 4.2 Frontend Details
-
+The frontend is a lightweight React application served via an NGINX container. It provides a simple, responsive user interface for the click counter and communicates with the backend API over HTTPS. The frontend container image is built and published to Docker Hub, and deployed via Kubernetes Deployment and Service resources. Ingress routes HTTPS requests to the frontend, enabling secure, browser-based access.
 ### 4.3 Backend Details
+The backend is a Node.js Express server responsible for handling API requests from the frontend and updating the click count in the database. It exposes REST endpoints (/api/count, /api/click) for retrieving and incrementing the click value. The backend securely connects to the Postgres database using credentials managed by Sealed Secrets, and is deployed as a stateless Deployment with resource limits and security context set.
 
 ### 4.4 Database Setup with Postgres (StatefulSet)
 As a db solution Postgres was chosen implemented as StatefulSet with attached PVC to keep the data persistent. Sealed Secrets were used for login credentials.
@@ -122,6 +124,35 @@ The Deny-all default config were introduce to reduce potential threats.
 
 
 ## 6. How to Run the Whole Setup
+### 6.1 Start up
+To start up the cluster, use:
+
+    make all
+as well as commands from sections 6.2 and 6.3 to create secrets and argocd. Once argocd is up, and secrets are in place you can synchronise the app and it should be running.
+
+To destroy cluster, you can run:
+
+    make clean
+### 6.2 Secret Creation
+First create secret for your env:
+
+    kubectl create secret generic postgres-secret-dev \
+      --namespace dev \
+      --from-literal=POSTGRES_DB=changeme \
+      --from-literal=POSTGRES_USER=changeme \
+      --from-literal=POSTGRES_PASSWORD=changeme \
+      --dry-run=client -o yaml > postgres-secret-dev.yaml
+    
+Then, seal with kubeseal:
+
+    kubeseal --controller-namespace kube-system --format yaml < postgres-secret-dev.yaml > sealed-postgres-secret-dev.yaml
+
+Move it to the branch for your enviroment in overlay folder(change dev in names for other values)
+### 6.3 ArgoCD credentials
+To get admin password you can run this command on cluster:
+
+    kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode
+
 
 ## 7. Conclusion
 ### 7.1 Achievements
@@ -155,10 +186,6 @@ in terraform with have logic for cleaning cluster
 
 
 
-
-##argocd 
-
-we create argo cd from repo(use version) then load 3 applications and then we need to change password for admin user
 
 to get password use:
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode

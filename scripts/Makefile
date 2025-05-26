@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: all  cluster cert-manager argocd ingress clean
 
-all:  cluster cert-manager argocd ingress
+all:  cluster cert-manager argocd ingress secret
 
 # Applies core namespaces, ArgoCD, etc.
 cluster:
