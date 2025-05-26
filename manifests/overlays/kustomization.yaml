@@ -5,6 +5,7 @@ resources:
   - rbac/dev-role.yaml
   - rbac/dev-role-binding.yaml
   - rbac/dev-service-account.yaml
+  - network-policy.yaml
 
 patches:
   - path: patch-frontend.yaml
