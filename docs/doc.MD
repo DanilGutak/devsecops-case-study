@@ -96,7 +96,8 @@ The following screenshot represent the structure of the application as seen on a
 ### 4.1 Demo App Overview (Click Counter)
 The demo application is a classic three-tier web app designed to demonstrate GitOps workflows, secure deployment, and infrastructure automation. Users interact with a web interface that displays a button; each click is counted and persisted. The architecture separates concerns into frontend, backend, and database services, deployed as independent pods within Kubernetes. All communication is secured, and deployment is fully declarative.
 
-TODO: Schema of logic
+![alt text](Schema.png)
+
 ### 4.2 Frontend Details
 The frontend is a lightweight React application served via an NGINX container. It provides a simple, responsive user interface for the click counter and communicates with the backend API over HTTPS. The frontend container image is built and published to Docker Hub, and deployed via Kubernetes Deployment and Service resources. Ingress routes HTTPS requests to the frontend, enabling secure, browser-based access.
 ### 4.3 Backend Details
