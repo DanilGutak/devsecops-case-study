@@ -4,11 +4,31 @@ This repository corresponds to the work done during preparation for the final st
 ## 1. Overview
 
 ### 1.1 Objective
-    TODO: copy from task replace with chatgpt
+  To design and deploy a secure, automated Kubernetes development environment using KIND and GitOps, featuring separate dev, test, and prod namespaces. The goal is to implement a click counter demo app and enforce security best practices—such as RBAC, secret encryption, and vulnerability scanning—while managing everything declaratively via Git.
 
 ### 1.2 Key Features Implemented
-    Comprehensive list of implemented features:
-    TODO: chat
+  Comprehensive list of implemented features:
+  - Automated cluster setup with Terraform and KIND
+
+  - Three namespaces: dev, test, prod
+
+  - GitOps deployment via ArgoCD and Kustomize overlays
+
+  - Click counter app (frontend, backend, PostgreSQL)
+
+  - RBAC for namespace and ArgoCD access control
+
+  - Sealed Secrets for encrypted sensitive data
+
+  - TLS/HTTPS via cert-manager and Ingress
+
+  - NetworkPolicies to restrict internal traffic
+
+  - SecurityContext hardening for all pods
+
+  - Shell scripts for full automation
+
+  - Documentation with diagrams and screenshots
 
 ## 2. Infrastructure Setup
 
@@ -27,6 +47,8 @@ To simulate real enviroments 3 namespaces were created for 3 intended enviroment
 The Ingress Controller was installed for ArgoCD exposure as well as for main application ingress management. 
 ### 2.5 TLS Certificates with cert-manager
 Cert-manager is used to issue appropriate certificates for both argoCD and main application to enhance security through SSL cerificates.
+### 2.6 Automation Scripts
+Scripts in the scripts folder as well as makefile to consolidate them are used to have documented version of the infrastructure setup and cluster configuration.  
 
 ## 3. GitOps Workflow
 
@@ -38,57 +60,74 @@ The repository has 4 branches:
 ### 3.2 Kustomize: Base and Overlays
 Kustomize was used to patch the application manifests .
 The actual structure of the repository corresponds to the base being the common manifests across different enviroments and overlay being custom configuration based on the enviroment its running it:
-    
+    ├── manifests
+    │   ├── base
+    │   │   ├── backend-deployment.yaml
+    │   │   ├── backend-service.yaml
+    │   │   ├── frontend-deployment.yaml
+    │   │   ├── frontend-service.yaml
+    │   │   ├── kustomization.yaml
+    │   │   ├── network-policy.yaml
+    │   │   └── postgres-statefulset.yaml
+    │   └── overlays
+    │       ├── frontend-ingress.yaml
+    │       ├── kustomization.yaml
+    │       ├── patch-backend.yaml
+    │       ├── patch-frontend.yaml
+    │       ├── rbac
+    │       │   ├── dev-role-binding.yaml
+    │       │   ├── dev-role.yaml
+    │       │   └── dev-service-account.yaml
+    │       └── sealed-postgres-dev.yaml
+
+        
 ### 3.3 ArgoCD Configuration & Applications
-### 3.4 Promotion Strategy (dev → test → prod)
+ArgoCD is listening for 3 branches in the repository and deploys any changes occuring to corresponding env.
+
+### 3.4 Promotion Strategy
+As a suggestion and practice to be followed the following promotion strategy for the new feature implementations should follow through  (dev → test → prod) pipeline conducting QA and checks before promoting changes to new enviroment.
+### 3.5 Argo CD Chart
+The following screenshot represent the structure of the application as seen on argoCD UI:
+TODO: screenshot of the app
+
 
 
 ## 4. Application Architecture
 ### 4.1 Demo App Overview (Click Counter)
+TODO: screenshot from the app
+TODO: Schema of logic
 ### 4.2 Frontend Details
+
 ### 4.3 Backend Details
+
 ### 4.4 Database Setup with Postgres (StatefulSet)
+As a db solution Postgres was chosen implemented as StatefulSet with attached PVC to keep the data persistent. Sealed Secrets were used for login credentials.
 ### 4.5 Ingress and Service Configuration
-### 4.6 Image Tagging & DockerHub Integration
+The Ingress for the application exposes the port 443 as the external access. Frontend and backend communicate through ingress while backend and postgres are communicating through internal communication.
 
 ## 5. Security Design
 ### 5.1 Kubernetes RBAC (dev, test, prod)
+TODO: add table
 ### 5.2 ArgoCD RBAC & Policy Mapping
+TODO: add table
 ### 5.3 Sealed Secrets Implementation
+The secret there sealed using bitnami secret controller offering advance solution to secret handling compared to default solution. Secrets are sealed using the controller so that they cannot be decrypted without it. This allows to push sealed secrets to the cluster without risking an exposure.
 ### 5.4 Network Policies
-  ### 5.4.1 Deny-All Defaults
-  ### 5.4.2 Ingress and Backend Egress Rules
+The Deny-all default config were introduce to reduce potential threats. 
 ### 5.5 Pod & Container Hardening
-  ### 5.5.1 Security Contexts
-  ### 5.5.2 Non-root Users & Capabilities
-  ### 5.5.3 Resource Limits
+
+
 ### 5.6 TLS and Encrypted Communication
 
 
-## 6. Scripts & Automation
-### 9.1 cluster-up.sh
-### 9.2 cluster-down.sh
-### 9.3 cluster-ingress.sh
-### 9.4 cluster-cert-manager.sh
-### 9.5 cluster-argocd.sh
-### 9.6 patch-argocd-rbac.sh
-### 9.7 image-publish-[frontend|backend].sh
-### 9.8 Makefile Workflow
-## 7. How to Run the Whole Setup
 
-## 8. Conclusion
-### 11.1 Achievements
-### 11.3 Potential Improvements
+## 6. How to Run the Whole Setup
 
-## 9. Used Resources
+## 7. Conclusion
+### 7.1 Achievements
+### 7.2 Potential Improvements
 
-
-
-
-
-
-
-
+## 8. Used Resources
 
 We create cluster with 
 
