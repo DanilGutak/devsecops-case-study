@@ -5,6 +5,7 @@ resources:
   - rbac/test-role.yaml
   - rbac/test-role-binding.yaml
   - rbac/test-service-account.yaml
+  - network-policy.yaml
 
 patches:
   - path: patch-frontend.yaml
