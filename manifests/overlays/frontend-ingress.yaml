@@ -2,16 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend-ingress
-  namespace: dev 
+  namespace: test 
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   tls:
     - hosts:
-        - click.dev.local
-      secretName: click-dev-tls
+        - click.test.local
+      secretName: click-test-tls
   rules:
-  - host: click.dev.local
+  - host: click.test.local
     http:
       paths:
       - path: /api/

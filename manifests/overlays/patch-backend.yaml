@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 2
+  replicas: 3
   revisionHistoryLimit: 1
   template:
     spec:
@@ -12,9 +12,9 @@ spec:
           image: danilgutak/click-backend:v1.2.0
           resources:
             limits:
-              cpu: "500m"
-              memory: "256Mi"
+              cpu: "1000m"
+              memory: "512Mi"
             requests:
-              cpu: "100m"
-              memory: "128Mi"
+              cpu: "200m"
+              memory: "256Mi"
 
