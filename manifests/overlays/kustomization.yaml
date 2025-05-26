@@ -1,10 +1,10 @@
 resources:
   - ../base
   - frontend-ingress.yaml
-  - sealed-postgres-dev.yaml
-  - rbac/dev-role.yaml
-  - rbac/dev-role-binding.yaml
-  - rbac/dev-service-account.yaml
+  - sealed-postgres-prod.yaml
+  - rbac/prod-role.yaml
+  - rbac/prod-role-binding.yaml
+  - rbac/prod-service-account.yaml
 
 patches:
   - path: patch-frontend.yaml
