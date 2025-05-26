@@ -100,6 +100,8 @@ The demo application is a classic three-tier web app designed to demonstrate Git
 
 ### 4.2 Frontend Details
 The frontend is a lightweight React application served via an NGINX container. It provides a simple, responsive user interface for the click counter and communicates with the backend API over HTTPS. The frontend container image is built and published to Docker Hub, and deployed via Kubernetes Deployment and Service resources. Ingress routes HTTPS requests to the frontend, enabling secure, browser-based access.
+Frontend demo:
+![alt text](Demo.png)
 ### 4.3 Backend Details
 The backend is a Node.js Express server responsible for handling API requests from the frontend and updating the click count in the database. It exposes REST endpoints (/api/count, /api/click) for retrieving and incrementing the click value. The backend securely connects to the Postgres database using credentials managed by Sealed Secrets, and is deployed as a stateless Deployment with resource limits and security context set.
 
