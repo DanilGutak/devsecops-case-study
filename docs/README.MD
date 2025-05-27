@@ -103,6 +103,7 @@ The following screenshot represent the structure of the application as seen on a
 ### 4.1 Demo App Overview (Click Counter)
 The demo application is a classic three-tier web app designed to demonstrate GitOps workflows, secure deployment, and infrastructure automation. Users interact with a web interface that displays a button; each click is counted and persisted. The architecture separates concerns into frontend, backend, and database services, deployed as independent pods within Kubernetes. All communication is secured, and deployment is fully declarative.
 
+
 ![alt text](Schema.png)
 
 ### 4.2 Frontend Details
